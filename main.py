@@ -1,1 +1,1 @@
-import app.setup.load
+import app.run
