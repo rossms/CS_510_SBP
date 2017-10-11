@@ -8,12 +8,15 @@ boardObj = board()
 inputNums = content.replace("\n", "").split(",")
 boardObj.w = int(inputNums[0])
 boardObj.h = int(inputNums[1])
+boardObj.matrix = [[0 for x in range(boardObj.w)] for x in range(boardObj.h)]
 inputNumsIndex = int(2)
 for x in xrange(0, boardObj.h):
     for y in xrange(0, boardObj.w):
-        print x , y
-        #print int(inputNums[inputNumsIndex])
         boardObj.matrix[x][y] = int(inputNums[inputNumsIndex])
         inputNumsIndex += 1
 
-print boardObj.matrix
+boardObj.show(boardObj)
+
+newObj = boardObj.clone(boardObj)
+
+print(newObj.w)
