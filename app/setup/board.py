@@ -1,6 +1,7 @@
 from __future__ import print_function
 from move import *
 from block import *
+from game_play import *
 class board:
     w = 1
     h = 1
@@ -95,3 +96,7 @@ class board:
 
         for obj in moves:
             print('blockid:',obj.block,',direction:',obj.direction)
+        gamePlay = game_play()
+        gamePlay.blocks = currblocks
+        gamePlay.moves = moves
+        return gamePlay
