@@ -7,8 +7,9 @@ currentBoard.show(currentBoard)
 #clone currentboard into a new object newBoard
 newBoard = currentBoard.clone(currentBoard)
 #check if the puzzle is solved
-print(currentBoard.isSolved(currentBoard))
+#print(currentBoard.isSolved(currentBoard))
 #get all blocks in the current state
-print(currentBoard.getBlocks(currentBoard))
+currentBlocks = currentBoard.getBlocks(currentBoard)
 #get moves for currentboard and block(s)
-currentBoard.moves(currentBoard, [2])
+#currentBoard.moves(currentBoard, [2])
+currentBoard.moves(currentBoard, currentBlocks)

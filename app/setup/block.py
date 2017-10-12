@@ -1,3 +1,5 @@
 class block():
-    size = 1
+    id = 2
+    height = 1
+    width = 1
     currentPosition = []
