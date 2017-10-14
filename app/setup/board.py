@@ -2,6 +2,7 @@ from __future__ import print_function
 from move import *
 from block import *
 from game_play import *
+from random import randint
 class board:
     w = 1
     h = 1
@@ -94,9 +95,63 @@ class board:
                 newMove.direction = 3
                 moves.append(newMove)
 
-        for obj in moves:
-            print('blockid:',obj.block,',direction:',obj.direction)
+        #for obj in moves:
+            #print('blockid:',obj.block,',direction:',obj.direction)
         gamePlay = game_play()
         gamePlay.blocks = currblocks
         gamePlay.moves = moves
         return gamePlay
+
+    def simpleComparison(self, board1, board2):
+        identical = True
+        if (board1.h != board2.h) or (board1.w != board2.w):
+            identical = False
+        for x in xrange(0, board1.h):
+            for y in xrange(0, board1.w):
+                #print ('board1:',board1.matrix[x][y])
+                #print ('board2:',board2.matrix[x][y])
+                if board1.matrix[x][y] != board2.matrix[x][y]:
+                    identical = False
+                    break
+        return identical
+
+    def normalize(self, board):
+        nextIndex = 3
+        for x in xrange(0, board.h):
+            for y in xrange(0, board.w):
+                if board.matrix[x][y] == nextIndex:
+                    nextIndex += 1
+                elif board.matrix[x][y] > nextIndex:
+                    self.swapIdx(nextIndex, board.matrix[x][y],board)
+                    nextIndex += 1
+        return board
+    def swapIdx(self, idx1, idx2, board):
+        for x in xrange(0, board.h):
+            for y in xrange(0, board.w):
+                if board.matrix[x][y] == idx1:
+                    board.matrix[x][y] = idx2
+                elif board.matrix[x][y] == idx2:
+                    board.matrix[x][y] = idx1
+        return board
+    def randomWalks(self, board, rand):
+        solved = False
+        if not solved:
+            for n in xrange(0, rand):
+                gamePlay = self.moves(board, self.getBlocks(board))
+                rand = randint(1,len(gamePlay.moves))
+                newBoard = move.applyMove(move(), board, gamePlay.moves[(rand - 1)], gamePlay.blocks)
+                normalizedBoard = self.normalize(newBoard)
+                solved = self.isSolved(normalizedBoard)
+                board = newBoard
+                printDirection = ""
+                if gamePlay.moves[(rand - 1)].direction == 0:
+                    printDirection = "up"
+                elif gamePlay.moves[(rand - 1)].direction == 1:
+                    printDirection = "right"
+                elif gamePlay.moves[(rand - 1)].direction == 2:
+                    printDirection = "down"
+                elif gamePlay.moves[(rand - 1)].direction == 3:
+                    printDirection = "left"
+                print('(',gamePlay.moves[(rand - 1)].block,',',printDirection,')')
+                self.show(board)
+                print(solved)
